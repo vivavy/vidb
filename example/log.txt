@@ -1,0 +1,73 @@
+Starting emulator
+lines: db.table.create(
+		"users",
+		{
+			"name": str,
+			"age": int
+		}
+	)
+
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+Updating database
+Updating `users`
+Raw table data: <vidb.TableClass object at 0x7fde8213b9a0>
+Table data: []
+str
+int
+
+Types: {'name': 'str', 'age': 'int', 'id': ''}
+Data: [{'name': 'str', 'age': 'int'}]
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+lines: db.users.insert(
+		{
+			"name": "Vi",
+			"age": 21
+		}
+	)
+
+Checking data enabled
+Checking data
+Data: {'name': 'Vi', 'age': 21}
+Types: {'name': <class 'str'>, 'age': <class 'int'>}
+Checking <class 'str'> = <class 'str'>
+Checking <class 'int'> = <class 'int'>
+Inserting data
+Updating
+Updating database
+Updating `users`
+Raw table data: <vidb.TableClass object at 0x7fde8213b250>
+Table data: [{'name': 'Vi', 'age': 21, 'id': 1}]
+str
+int
+
+Types: {'name': 'str', 'age': 'int', 'id': ''}
+Data: [{'name': 'str', 'age': 'int'}, {'name': 'Vi', 'age': 21, 'id': 1}]
+Done, new data: [{'name': <class 'str'>, 'age': <class 'int'>, 'id': 0}, {'name': 'Vi', 'age': 21, 'id': 1}]
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+lines: print(
+		db.users.select(ANYTHING)
+	)
+
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+lines: print(
+		db.users[0]
+	)
+
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+lines: from pprint import pprint
+
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+lines: pprint(db.users[0])
+
+Created table users, types: {'name': <class 'str'>, 'age': <class 'int'>}
+
+lines: exit()
+
