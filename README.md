@@ -38,13 +38,13 @@ Now, you can create, delete and change data in the database using ViDB Emulator.
 To create a new table, you can use the following command:
 
 ```python
-create.table <table_name>
+db.table.create("tabe_name", {"field_name": field_type})
 ```
 
 For example, to create a table named `users`, you can use the following command:
 
 ```python
-Table.create("users", {
+db.table.create("users", {
     "name": string, 
     "age": int
 })
@@ -57,7 +57,7 @@ Note: field `id` is automatically created by ViDB Server and it is autoincrement
 To insert data into a table, you can use the following command:
 
 ```python
-Table.users.insert({
+db.users.insert({
     "name": "John Doe",
     "age": 30
 })
@@ -66,7 +66,7 @@ Table.users.insert({
 Also, you can use the following command to insert multiple rows at once:
 
 ```python
-Table.users.insert([  
+db.users.insert([  
     {
         "name": "John Doe",
         "age": 30
@@ -83,7 +83,7 @@ Table.users.insert([
 To update data in a table, you can use the following command:
 
 ```python
-Table.users[0].update({
+db.users[0].update({
     "name": "John Smith"
 })
 ```
@@ -93,7 +93,7 @@ Table.users[0].update({
 To delete data from a table, you can use the following command:
 
 ```python
-del Table.users[0]
+del db.users[0]
 ```
 
 ## How to use ViDB in Python?
@@ -124,24 +124,24 @@ from vidb import ViDB
 db = ViDB(".")
 
 # Create a new table named "users"
-db.Table.create("users", {
+db.table.create("users", {
     "name": str,
     "age": int
 })
 
 # Insert data into the "users" table
-db.Table.users.insert({
+db.users.insert({
     "name": "John Doe",
     "age": 30
 })
 
 # Update data in the "users" table
-db.Table.users[0].update({
+db.users[0].update({
     "name": "John Smith"
 })
 
 # Delete data from the "users" table
-del db.Table.users[0]
+del db.users[0]
 ```
 
 ## Also, you can select entries from a table by some conditions
@@ -164,7 +164,7 @@ print(adults)
 import re
 
 # Select all entries from the "users" table
-adults = db.Table.users.select(lambda entry: re.search(r".*S.*", entry["name"]))
+adults = db.users.select(lambda entry: re.search(r".*S.*", entry["name"]))
 
 print(adults)
 # >>> [{"id": 1, "name": "John Smith", "age": 30}]
