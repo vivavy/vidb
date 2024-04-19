@@ -1,15 +1,9 @@
-from abc import ABC
+from __future__ import annotations
 from threading import Thread as _T
 import json, os, time, traceback as tb
 
 
 __all__ = ["ViDB"]
-
-
-class Item(ABC, dict): ...
-class TableClass(ABC):...
-class ViDB(ABC): ...
-
 
 def thread(name):
     def wrapper(func):
@@ -182,6 +176,7 @@ class ViDB:
             
             for table in db:
                 types = {}
+                # print(db[table][0].items())
                 for key, value in db[table][0].items():
                     types[key] = eval(value)
                 self.table[table] = TableClass(self, table, types)
@@ -193,7 +188,8 @@ class ViDB:
             print("\033[1;31m" + "─" * num + excname + "─" * num + "\033[0m")
             tb.print_exception(e)
             print("\r\033[1;31mEmulator catched uploading error\033[0m")
-            self.log("\n\n\nUploading error\n\n"+tb.format_exception(e)+"\n\n\n")
+            fe = tb.format_exception(e)
+            self.log("\n\n\nUploading error\n\n"+fe if type(fe) is str else ', '.join(fe)+"\n\n\n")
         
         self.block = False
     
@@ -210,7 +206,8 @@ class ViDB:
                 print("\033[1;31m" + "─" * num + excname + "─" * num + "\033[0m")
                 tb.print_exception(e)
                 print("\r\033[1;31mEmulator catched polling error\033[0m")
-                self.log("\n\n\nPolling error\n\n"+"\n".join(tb.format_exception(e))+"\n\n\n")
+                fe = tb.format_exception(e)
+                self.log("\n\n\nPolling error\n\n" + fe if type(fe) is str else ', '.join(fe) + "\n\n\n")
         
     def update(self):
         while self.block: time.sleep(0.1)
@@ -226,8 +223,9 @@ class ViDB:
                 log(f"Table data: {datat}")
                 types = {}
                 for key, value in self.table[table].all()[0].items():
-                    log(repr(value)[8:-2])
-                    types[key] = repr(value)[8:-2]
+                    represented_type = repr(value).removeprefix('<class \'').removesuffix('\'>')
+                    log(represented_type)
+                    types[key] = represented_type
                 log(f"Types: {types}")
                 del types["id"]
                 data[table] = [types] + datat
@@ -241,5 +239,6 @@ class ViDB:
             print("\033[1;31m" + "─" * num + excname + "─" * num + "\033[0m")
             tb.print_exception(e)
             print("\r\033[1;31mEmulator catched updating error\033[0m")
-            self.log("\n\n\nUpdating error\n\n"+tb.format_exception(e)+"\n\n\n")
+            fe = tb.format_exception(e)
+            self.log("\n\n\nUpdating error\n\n" + fe if type(fe) is str else ', '.join(fe) + "\n\n\n")
         self.block = False
